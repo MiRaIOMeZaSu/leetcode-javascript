@@ -20,31 +20,25 @@ var maxEnvelopes = function (envelopes) {
     // 对于长相同的,将最大的排在前面(降序排列),以保证对长相同的最终中最长子序列只能选择其中一个
     // 此时开始对于宽的序列求最长递增子序列(动态规划)
     var dp = [];
-    for (var i = 0; i < envelopes.length; i++) {
-        dp.push([]);
-        for (var j = 0; j < envelopes.length; j++) {
-            dp[i].push(0);
-        }
-    }
     for (var i = envelopes.length - 1; i >= 0; i--) {
-        dp[i][i] = 1;
+        dp.push(1);
     }
-    for (var i = envelopes.length - 2; i >= 0; i--) {
-        for (var j = i + 1; j < envelopes.length; j++) {
-            if (envelopes[i][1] < envelopes[j][1]) {
-                var min = Math.min(dp[i + 1][j], dp[i][j - 1]);
-                if (Math.max(dp[i + 1][j], dp[i][j - 1]) > dp[i + 1][j - 1]) {
-                    dp[i][j] = min + 1
-                } else {
-                    dp[i][j] = min
-                }
-            } else {
-                dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1])
+    for (var i = 1; i < envelopes.length; i++) {
+        for (var j = 0; j < i; j++) {
+            if (envelopes[i][1] > envelopes[j][1]) {
+                dp[i] = Math.max(dp[j] + 1, dp[i]);
             }
+            // else {
+            //     dp[i] = Math.max(dp[j], dp[i]);
+            // }
         }
+    }
+    var max = 1;
+    for (var i = 1; i < envelopes.length; i++) {
+        max = Math.max(max, dp[i]);
     }
 
-    return dp[0][envelopes.length - 1];
+    return max;
 };
 console.log(maxEnvelopes([
     [2, 100],
