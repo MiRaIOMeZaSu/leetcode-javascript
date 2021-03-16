@@ -1,50 +1,16 @@
-/**
- * @param {number[]} nums
- */
+// 对于每一个下标的数,都随机选择一个数字和自己交换值(可以和自己交换)
 var Solution = function (nums) {
-    // 这个就是构造函数
-    this.nums = nums;
-    this.n = nums.length;
-    // this.mapN = {};
-    // this.mapN[1] = 1;
-    // for (var i = 2; i <= this.n; i++) {
-    //     this.mapN[i] = this.mapN[i - 1] * i;
-    // }
+    this.nums = nums
 };
-
-/**
- * Resets the array to its original configuration and return it.
- * @return {number[]}
- */
 Solution.prototype.reset = function () {
-    return this.nums;
+    return this.nums
 };
-
-/**
- * Returns a random shuffling of the array.
- * @return {number[]}
- */
-
 Solution.prototype.shuffle = function () {
-    var index;
-    var picked;
-    var result = [];
-    var toChange = this.nums.map((x) => x);
-    for (var i = 0; i < this.n; i++) {
-        index = Math.floor(Math.random() * toChange.length);
-        picked = toChange[index];
-        result.push(picked);
-        toChange.splice(index, 1);
-    }
-    return result;
+    var nums = this.nums.slice()
+    nums.forEach((_, i, a, j) => (j = Math.random() * a.length | 0, [a[i], a[j]] = [a[j], a[i]]))
+    return nums
 };
 
-/**
- * Your Solution object will be instantiated and called as such:
- * var obj = new Solution(nums)
- * var param_1 = obj.reset()
- * var param_2 = obj.shuffle()
- */
 var obj = new Solution([1, 2, 3])
 var param_1 = obj.reset()
 var param_2 = obj.shuffle()
