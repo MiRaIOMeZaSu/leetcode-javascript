@@ -37,13 +37,19 @@ var createSortedArray = function (instructions) {
                     temp++;
                 }
                 var index;
-                if (l < arr.length - 1 - temp) {
+                if (l < arr.length - temp) {
                     index = l;
                 } else {
                     index = temp;
                 }
+                var toPlus = 0;
+                if (index == arr.length || index == 0) {
+                    toPlus = 0;
+                } else {
+                    toPlus = Math.min(index, arr.length - index);
+                }
+                ret += toPlus;
                 arr.splice(index, 0, instructions[i]);
-                ret += Math.min(index, arr.length - 1 - index);
                 break;
             }
         }
@@ -61,7 +67,10 @@ var createSortedArray = function (instructions) {
         }
 
     }
+    if (ret > 1000000007) {
+        ret = ret % 1000000007;
+    }
     return ret;
 };
-
-createSortedArray([3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1]);
+var ret = createSortedArray([3, 2, 1, 3, 2, 1, 3, 2, 1]);
+console.log(ret);
